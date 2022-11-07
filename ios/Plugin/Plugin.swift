@@ -22,6 +22,26 @@ public class SignInWithApple: CAPPlugin {
         authorizationController.performRequests()
     }
 
+    @objc func isAppleIdValid(_ call: CAPPluginCall) {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let forUserId = call.getString("appleId")!;
+
+        appleIDProvider.getCredentialState(forUserID: forUserId) { credentialState, error in
+            if error != nil {
+                call.reject("An error has occurred.", error?.localizedDescription)
+                return
+            }
+
+            switch credentialState {
+            case .authorized:
+                call.resolve(["valid": true])
+                break
+            default:
+                call.resolve(["valid": false])
+            }
+        }
+    }
+
     func getRequestedScopes(from call: CAPPluginCall) -> [ASAuthorization.Scope]? {
         var requestedScopes: [ASAuthorization.Scope] = []
 
