@@ -2,6 +2,8 @@ import { WebPlugin } from '@capacitor/core';
 import * as $script from 'scriptjs';
 
 import type {
+  AppleIdValidRequest,
+  AppleIdValidResponse,
   SignInWithAppleOptions,
   SignInWithApplePlugin,
   SignInWithAppleResponse,
@@ -10,11 +12,10 @@ import type {
 declare let AppleID: any;
 
 export class SignInWithAppleWeb
-  extends WebPlugin
-  implements SignInWithApplePlugin
-{
+    extends WebPlugin
+    implements SignInWithApplePlugin {
   private appleScriptUrl =
-    'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js';
+      'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js';
   private isAppleScriptLoaded = false;
 
   constructor() {
@@ -69,6 +70,10 @@ export class SignInWithAppleWeb
         reject('No options were provided.');
       }
     });
+  }
+
+  async isAppleIdValid(_: AppleIdValidRequest): Promise<AppleIdValidResponse> {
+    throw new Error('Method not implemented.');
   }
 
   private loadSignInWithAppleJS(): Promise<boolean> {

@@ -1,5 +1,7 @@
 # node files
-dist/
+
+# needed because we don't deploy fork to npm
+# dist/
 node_modules/
 
 # iOS files
